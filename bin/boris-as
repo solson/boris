@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+file = __FILE__
+file = File.readlink(file) while File.symlink? file
+
+require File.expand_path('../../src/asm/asm', file)
+
+if ARGV.length != 1
+  $stderr.puts "usage: boris-as <input file>"
+  exit 1
+end
+
+print Boris::Assembler.assemble(File.read(ARGV[0]))
