@@ -23,6 +23,24 @@
     } \
 }
 
+// Check whether this computer's architecture is big-endian or not.
+bool is_big_endian(void) {
+    union {
+        uint32_t i;
+        char c[4];
+    } u = {0x01020304};
+
+    return u.c[0] == 1;
+}
+
+// Swap from little-endian to big-endian or vice versa.
+void swap_byte_order_32(uint32_t *val) {
+    *val = (*val >> 24) |
+           ((*val << 8) & 0x00FF0000) |
+           ((*val >> 8) & 0x0000FF00) |
+           (*val << 24);
+}
+
 // This is where the magic happens. This function is the only thing that
 // actually executes boris instructions.
 void VM_run(Inst *insts, size_t num_insts) {
@@ -75,9 +93,18 @@ void VM_run(Inst *insts, size_t num_insts) {
                 return;
             }
 
-            // Get the integer from the instruction sequence and push it on
-            // the data stack
+            // Get the integer from the instruction sequence.
             int32_t val = *((int32_t*) ip);
+
+            // Note: boris instruction sequences shall always store multibyte
+            // values in little-endian byte order. Thus, if the computer
+            // architecture is big-endian, we actually want the bytes in
+            // reverse order: ip[3] .. ip[0].
+            if(is_big_endian()) {
+                swap_byte_order_32((uint32_t*) &val);
+            }
+
+            // Push the value onto the data stack.
             PUSH(val);
 
             // Increment the ip past the value
