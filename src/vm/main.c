@@ -1,12 +1,12 @@
 #include "Inst.h"
-#include "VM.h"
+#include "vm/VM.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
 /*
     Inst insts[] = {
-        INST_PUSH, 21, 0, 0, 0, // TODO: handle endianness problems
+        INST_PUSH, 21, 0, 0, 0,
         INST_DUP,
         INST_ADD,
         INST_PRINT,

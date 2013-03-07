@@ -1,4 +1,4 @@
-#include "VM.h"
+#include "vm/VM.h"
 #include <stdio.h>
 #include <inttypes.h>
 #include <stdbool.h>

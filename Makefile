@@ -1,6 +1,3 @@
-# Output executable name
-OUTPUT := boris
-
 # Compiler options
 CC := clang
 override CFLAGS += -MMD -Iinclude -Wall -Wextra
@@ -10,15 +7,15 @@ SOURCES := $(shell find src/ -name '*.c')
 OBJECTS := $(SOURCES:%.c=%.o)
 DFILES  := $(SOURCES:%.c=%.d)
 
-all: $(OUTPUT)
+all: bin/boris
 
-$(OUTPUT): $(OBJECTS)
+bin/boris: $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 # Dependency files from -MMD
 -include $(DFILES)
 
-%.o: %.cpp
+%.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
