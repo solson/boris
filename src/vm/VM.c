@@ -60,6 +60,9 @@ void VM_run(Inst *insts, size_t num_insts) {
     int32_t *data_p = data;
     int32_t *data_end = data + STACK_SIZE;
 
+    // Whether or not this is a big endian machine.
+    bool big_endian = is_big_endian();
+
     // The run loop shall run indefinitely except for two cases:
     //   1) A 'halt' instruction is executed.
     //   2) Some kind of exception occurs (such as running out of
@@ -100,7 +103,7 @@ void VM_run(Inst *insts, size_t num_insts) {
             // values in little-endian byte order. Thus, if the computer
             // architecture is big-endian, we actually want the bytes in
             // reverse order: ip[3] .. ip[0].
-            if(is_big_endian()) {
+            if(big_endian) {
                 swap_byte_order_32((uint32_t*) &val);
             }
 
