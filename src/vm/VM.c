@@ -3,8 +3,8 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-// PUSH and DROP are used (only) inside VM_run to make dealing with the data
-// stack more convenient.
+// PUSH and CHECK_UNDERFLOW are used (only) inside VM_run to make dealing with
+// the data stack more convenient.
 #define PUSH(x) { \
     int32_t __val = (x); \
     data_p++; \
