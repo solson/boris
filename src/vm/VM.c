@@ -35,10 +35,10 @@ bool is_big_endian(void) {
 
 // Swap from little-endian to big-endian or vice versa.
 void swap_byte_order_32(uint32_t *val) {
-    *val = (*val >> 24) |
-           ((*val << 8) & 0x00FF0000) |
-           ((*val >> 8) & 0x0000FF00) |
-           (*val << 24);
+    *val = (*val >> 24)
+         | ((*val << 8) & 0x00FF0000)
+         | ((*val >> 8) & 0x0000FF00)
+         | (*val << 24);
 }
 
 // This is where the magic happens. This function is the only thing that
